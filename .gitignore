@@ -1,0 +1,20 @@
+# Purpose: Gitignore file to tell git to ignore certain things when pushing. Eg. The databases
+*.pyc
+*.pem
+*.pub
+*.tar.gz
+*.zip
+*.sql
+*.db
+secrets.txt
+./tmp
+./build/*
+.idea/*
+.idea
+env
+venv
+database.db
+.vscode
+*.rdb
+__pycache__
+*.sqlite
