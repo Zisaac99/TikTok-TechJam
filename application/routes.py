@@ -45,8 +45,6 @@ def login():
 def register():
     # Retrieve the register form
     form = registerForm()
-    print(form)
-    print(form.fullname.data)
     if request.method == 'POST':
         # Retrieve the username from the form sent
         fullname = form.fullname.data
@@ -79,14 +77,14 @@ def register():
             flash(f"Registration: success", "success")
             return redirect(url_for('login'))
         else:
-            print(form.errors)
             # If the two passwords are not the same we refresh the page with an error message
             if password != confirm:
                 flash("Both passwords must match!", "warning")
+                return redirect(url_for('register'))
             else:
                 # Refresh the page and display an error message
                 flash("Account could not be created, please check your credentials and try again.", 'danger')
-            return render_template("register.html", form = form, title = 'Register')
+            return redirect(url_for('register'))
     # Loads the register page
     return render_template("register.html", form = form, title = 'Register')
 
