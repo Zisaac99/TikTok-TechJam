@@ -1,0 +1,55 @@
+/* Purpose: CSS for the navbar */
+
+a {
+    color: white;
+    font-size: 125%;
+}
+
+.navbar-nav {
+    padding: 5px;
+    text-align: center;
+}
+
+.navbar-nav a:hover {
+    color: white;
+}
+
+.navbar-nav li {
+    margin: 3px;
+}
+
+.navbar .nav-item .dropdown-menu { 
+    display: none; 
+}
+
+.navbar .nav-item:hover .dropdown-menu { 
+    display: block;
+    padding: 5px;
+}
+
+.separator {
+    border-bottom: 1px solid black;
+}
+
+.navbar .nav-item:hover .dropdown-menu .dropdown-item:hover { 
+    background-color: #4C586F;
+    color: white;
+}
+
+.navImage {
+    width: 200px;
+    height: auto;
+}
+
+@media(max-width: 960px) {
+    .navbar {
+      flex-direction: column;
+    }
+
+    .navbar .nav-item {
+      padding: 0.5em 1em;
+    }
+  }
+  .navbar .navbar-nav {
+    margin-top: 0.5em;
+  }
