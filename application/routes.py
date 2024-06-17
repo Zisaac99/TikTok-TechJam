@@ -5,6 +5,8 @@ from flask import render_template, request, flash, redirect, json, jsonify, url_
 from flask_login import login_user, login_required, current_user, logout_user, AnonymousUserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
+db.create_all()
+
 #Handles http://127.0.0.1:5000/
 @app.route('/') 
 def index():
@@ -43,7 +45,11 @@ def login():
 def register():
     # Retrieve the register form
     form = registerForm()
+    print(form)
+    print(form.fullname.data)
     if request.method == 'POST':
+        # Retrieve the username from the form sent
+        fullname = form.fullname.data
         # Retrieve the username from the form sent
         username = form.username.data
         # Retrieve the email from the form sent
@@ -64,7 +70,7 @@ def register():
                 return redirect(url_for('login'))
             
             # Create a new user in the database
-            new_user = User(username = username, email = email, password = generate_password_hash(password, method='sha256'))
+            new_user = User(email = email, username = username, password = generate_password_hash(password, method='sha256'), fullname = fullname, balance = 0.00)
 
             db.session.add(new_user)
             db.session.commit()
@@ -72,15 +78,25 @@ def register():
             # Direct the user to the login page and display a success message
             flash(f"Registration: success", "success")
             return redirect(url_for('login'))
-        else: 
+        else:
+            print(form.errors)
             # If the two passwords are not the same we refresh the page with an error message
             if password != confirm:
                 flash("Both passwords must match!", "warning")
-                return redirect(url_for('register'))
-
             else:
                 # Refresh the page and display an error message
                 flash("Account could not be created, please check your credentials and try again.", 'danger')
-                return redirect(url_for('register'))
+            return render_template("register.html", form = form, title = 'Register')
     # Loads the register page
     return render_template("register.html", form = form, title = 'Register')
+
+# Logout button
+# You need to be logged in to use it
+@app.route('/logout')
+# @login_required
+def logout():
+    if current_user.is_authenticated:
+        logout_user()
+        return redirect(url_for("index"))
+    flash("Please login", "warning")
+    return redirect(url_for("index"))

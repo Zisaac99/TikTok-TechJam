@@ -17,6 +17,9 @@
         <div class='row navbar'>
             {% include "includes/nav.html" %}
         </div>
+        {% for category, message in get_flashed_messages(with_categories=True) %}
+        <div class="alert alert-{{category}} text-center">{{ message }}</div>
+        {% endfor %}
         {% block content %}
         {% endblock %}
         <!-- Footer -->
