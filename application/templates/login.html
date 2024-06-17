@@ -1,0 +1,49 @@
+<!-- Purpose: HTML code for the login page -->
+
+<!-- Inherits CSS created for the design of this page -->
+<link rel="stylesheet" href="{{ url_for('static',filename='css/login.css')}}" />
+
+<!-- Inherits from layout.html -->
+{% extends "layout.html" %}
+
+<!-- The block content replace the one encapsulated in  layout.html -->
+{% block content %}
+
+<!-- Flashes message during error -->
+{% for category, message in get_flashed_messages(with_categories=True) %}
+<div class="alert-{{category}} text-center">{{ message }}</div>
+{% endfor %}
+
+<div class='row login-form'>
+    <div class='container'>
+        <div class='main'>
+            <div class='content'>
+                <h2>Log In</h2>
+                <!-- Login form to pass data to the backend -->
+                <form name='frmLogin' action='/login' method='POST'>
+                    {{ form.hidden_tag() }}
+                    <input type='text' id='username' name='username' placeholder='User Name' required>
+                    {% for error in form.username.errors %}
+                    <span class="error-message">{{ error }}</span>
+                    {% endfor %}
+
+                    <input type='password' id='password' name='password' placeholder='Password' required>
+                    {% for error in form.password.errors %}
+                    <span class="error-message">{{ error }}</span>
+                    {% endfor %}
+                    
+                    <!-- Submit button -->
+                    <input class='submitButton' type='submit' id='submit' name='submit' value='Login'>
+                </form>
+                <!-- Navigate to register page -->
+                <p class='account'> Don't have an account? <a href='/register'>Register</a></p>
+            </div>
+            <!-- Image
+            <div class='form-img'>
+                <img class='loginImage' src='../static/images/login.jpg'>
+            </div> -->
+        </div>
+    </div>
+</div>
+
+{% endblock %}

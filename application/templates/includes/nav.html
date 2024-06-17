@@ -1,0 +1,25 @@
+<!-- Purpose: HTML code for the navba -->
+
+<link rel="stylesheet" href="{{ url_for('static',filename='css/nav.css')}}" />
+
+<nav class="navbar navbar-expand-md mx-auto">
+  <!--Image for the logo/brand of the website-->
+  <a class="navbar-brand"><img class="navImage" src="{{ url_for('static',filename='images/e-wallet.png')}}"></a>
+  <div id="main_nav">
+    <ul class="navbar-nav">
+      <!--Navigation to different webpages-->
+      <li class="nav-item"><a class="nav-link" href='/'>Home </a></li>
+      {% if not current_user.is_authenticated %}
+      <li class="nav-item dropdown">
+        <!--Dropdown to navigate to other pages-->
+        <a class="dropbtn nav-link dropdown-toggle" href={{ url_for('login') }} data-bs-toggle="dropdown">Login / Register</a>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href={{ url_for('login') }}>Login</a></li>
+          <div class="separator"></div>
+          <li><a class="dropdown-item" href={{ url_for('register') }}>Register</a></li>
+        </ul>
+      </li>
+      {% endif %}
+    </ul>
+  </div>
+</nav>
