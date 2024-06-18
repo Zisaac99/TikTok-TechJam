@@ -5,7 +5,8 @@ from flask import render_template, request, flash, redirect, json, jsonify, url_
 from flask_login import login_user, login_required, current_user, logout_user, AnonymousUserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
-db.create_all()
+with app.app_context():
+    db.create_all()
 
 #Handles http://127.0.0.1:5000/
 @app.route('/') 
@@ -65,7 +66,7 @@ def register():
             if user:
                 # If the username already exists in the database we refresh the page and display an error message
                 flash('Username already exists', 'warning')
-                return redirect(url_for('login'))
+                return redirect(url_for('register'))
             
             # Create a new user in the database
             new_user = User(email = email, username = username, password = generate_password_hash(password, method='sha256'), fullname = fullname, balance = 0.00)
