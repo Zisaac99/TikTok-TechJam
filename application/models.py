@@ -30,7 +30,7 @@ class Transaction(db.Model):
 
     # Primary Key
     transaction_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    amount = db.Column(db.Numeric(14,2)) # store balance as string will convert back for calculation
+    amount = db.Column(db.String(1000)) # store balance as string will convert back for calculation
     type = db.Column(db.Integer) #0 for deposit, 1 for transaction
     date = db.Column(db.DateTime(timezone=True))
     # Foreign Key
@@ -45,6 +45,7 @@ class Code(db.Model):
     # Primary Key
     code_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     code = db.Column(db.String(1000))
+    amount = db.Column(db.String(1000))
     isActivated = db.Column(db.Boolean)
 
 @login.user_loader
