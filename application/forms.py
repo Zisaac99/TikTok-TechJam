@@ -1,6 +1,5 @@
 from wtforms import FileField, SubmitField, FloatField, StringField, validators, PasswordField
 from wtforms.fields import *
-from wtforms.fields.html5 import *
 from flask_wtf import FlaskForm
 
 

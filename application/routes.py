@@ -69,7 +69,7 @@ def register():
                 return redirect(url_for('register'))
             
             # Create a new user in the database
-            new_user = User(email = email, username = username, password = generate_password_hash(password, method='sha256'), fullname = fullname, balance = 0.00)
+            new_user = User(email = email, username = username, password = generate_password_hash(password, method='pbkdf2:sha256'), fullname = fullname, balance = 0.00)
 
             db.session.add(new_user)
             db.session.commit()
