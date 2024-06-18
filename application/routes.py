@@ -8,6 +8,9 @@ from werkzeug.security import generate_password_hash, check_password_hash
 with app.app_context():
     db.create_all()
 
+with app.app_context():
+    db.create_all()
+
 #Handles http://127.0.0.1:5000/
 @app.route('/') 
 def index():
@@ -52,6 +55,8 @@ def register():
         # Retrieve the email from the form sent
         email = form.email.data
         # Retrieve the username from the form sent
+        fullname = form.fullname.data
+        # Retrieve the username from the form sent
         username = form.username.data
         # Retrieve the password from the form sent
         password = form.password.data
@@ -67,9 +72,10 @@ def register():
                 # If the username already exists in the database we refresh the page and display an error message
                 flash('Username already exists', 'warning')
                 return redirect(url_for('register'))
+                return redirect(url_for('register'))
             
             # Create a new user in the database
-            new_user = User(fullname = fullname, email = email, username = username, password = generate_password_hash(password, method='pbkdf2:sha256'))
+            new_user = User(email = email, username = username, password = generate_password_hash(password, method='pbkdf2:sha256'), fullname = fullname, balance = 0.00)
 
             db.session.add(new_user)
             db.session.commit()
@@ -77,23 +83,25 @@ def register():
             # Direct the user to the login page and display a success message
             flash(f"Registration: success", "success")
             return redirect(url_for('login'))
-        else: 
+        else:
             # If the two passwords are not the same we refresh the page with an error message
             if password != confirm:
                 flash("Both passwords must match!", "warning")
                 return redirect(url_for('register'))
-
             else:
                 # Refresh the page and display an error message
                 flash("Account could not be created, please check your credentials and try again.", 'danger')
-                return redirect(url_for('register'))
+            return redirect(url_for('register'))
     # Loads the register page
     return render_template("register.html", form = form, title = 'Register')
 
 # Logout button
 # You need to be logged in to use it
 @app.route('/logout')
-@login_required
+# @login_required
 def logout():
-    logout_user()
+    if current_user.is_authenticated:
+        logout_user()
+        return redirect(url_for("index"))
+    flash("Please login", "warning")
     return redirect(url_for("index"))
