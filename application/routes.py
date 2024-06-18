@@ -5,6 +5,9 @@ from flask import render_template, request, flash, redirect, json, jsonify, url_
 from flask_login import login_user, login_required, current_user, logout_user, AnonymousUserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
+with app.app_context():
+    db.create_all()
+
 #Handles http://127.0.0.1:5000/
 @app.route('/') 
 def index():
@@ -44,10 +47,12 @@ def register():
     # Retrieve the register form
     form = registerForm()
     if request.method == 'POST':
-        # Retrieve the username from the form sent
-        username = form.username.data
+        # Retrieve the full name from the form sent
+        fullname = form.fullname.data
         # Retrieve the email from the form sent
         email = form.email.data
+        # Retrieve the username from the form sent
+        username = form.username.data
         # Retrieve the password from the form sent
         password = form.password.data
         # Retrieve the confirmation password from the form sent
@@ -61,10 +66,10 @@ def register():
             if user:
                 # If the username already exists in the database we refresh the page and display an error message
                 flash('Username already exists', 'warning')
-                return redirect(url_for('login'))
+                return redirect(url_for('register'))
             
             # Create a new user in the database
-            new_user = User(username = username, email = email, password = generate_password_hash(password, method='sha256'))
+            new_user = User(fullname = fullname, email = email, username = username, password = generate_password_hash(password, method='pbkdf2:sha256'))
 
             db.session.add(new_user)
             db.session.commit()
@@ -84,3 +89,11 @@ def register():
                 return redirect(url_for('register'))
     # Loads the register page
     return render_template("register.html", form = form, title = 'Register')
+
+# Logout button
+# You need to be logged in to use it
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for("index"))

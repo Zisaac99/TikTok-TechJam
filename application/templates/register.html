@@ -23,7 +23,7 @@
                 <form name='frmRegister' action='/register' method='POST'>
                     {{ form.hidden_tag() }}
 
-                    <input type='text' id='fullName' name='fullName' placeholder='Full Name' required>
+                    <input type='text' id='fullname' name='fullname' placeholder='Full Name' required>
                     {% for error in form.username.errors %}
                     <span class="error-message">{{ error }}</span>
                     {% endfor %}

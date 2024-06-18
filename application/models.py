@@ -9,6 +9,7 @@ class User(UserMixin, db.Model):
 
     # Primary Key
     user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    fullname = db.Column(db.String(1000))
     email = db.Column(db.String(1000))
     username = db.Column(db.String(1000))
     password = db.Column(db.String(1000))

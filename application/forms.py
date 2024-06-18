@@ -1,5 +1,4 @@
-from wtforms import FileField, SubmitField, FloatField, StringField, validators, PasswordField
-from wtforms.fields import *
+from wtforms import FileField, SubmitField, FloatField, StringField, validators, PasswordField, EmailField
 from flask_wtf import FlaskForm
 
 
@@ -10,7 +9,7 @@ class loginForm(FlaskForm):
 
 class registerForm(FlaskForm):
     fullname = StringField('Full Name', validators=[validators.InputRequired()])
-    email = EmailField('Email', validators=[validators.InputRequired(), validators.Email(message="Please enter a valid email")]),
+    email = EmailField('Email', validators=[validators.InputRequired(), validators.Email(message="Please enter a valid email")])
     username = StringField('Username', validators=[validators.InputRequired()])
     password = PasswordField('New Password', validators=[validators.InputRequired()])
     confirm = PasswordField('Confirm Your Password', validators=[
