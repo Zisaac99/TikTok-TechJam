@@ -4,9 +4,8 @@ from application.models import *
 from flask import render_template, request, flash, redirect, json, jsonify, url_for, make_response, send_file
 from flask_login import login_user, login_required, current_user, logout_user, AnonymousUserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
-
-with app.app_context():
-    db.create_all()
+from application.api import *
+import math
 
 with app.app_context():
     db.create_all()
@@ -94,6 +93,15 @@ def register():
             return redirect(url_for('register'))
     # Loads the register page
     return render_template("register.html", form = form, title = 'Register')
+
+# Transaction page
+# You need to be logged in to use it
+@app.route('/transaction')
+def transaction():
+    if current_user.is_authenticated:
+        return render_template("transaction.html", title = 'Transactions')
+    flash("Please login", "warning")
+    return redirect(url_for("index"))
 
 # Logout button
 # You need to be logged in to use it
