@@ -12,7 +12,8 @@
       {% if not current_user.is_authenticated %}
       <li class="nav-item dropdown">
         <!--Dropdown to navigate to other pages-->
-        <a class="dropbtn nav-link dropdown-toggle" href={{ url_for('login') }} data-bs-toggle="dropdown">Login / Register</a>
+        <a class="dropbtn nav-link dropdown-toggle" href={{ url_for('login') }} data-bs-toggle="dropdown">Login /
+          Register</a>
         <ul class="dropdown-menu">
           <li><a class="dropdown-item" href={{ url_for('login') }}>Login</a></li>
           <div class="separator"></div>
@@ -21,14 +22,11 @@
       </li>
       {% endif %}
       {% if current_user.is_authenticated %}
-      <li class="nav-item dropdown">
-        <!--Dropdown to navigate to other pages-->
-        <a class="dropbtn nav-link dropdown-toggle" href={{ url_for('index') }} data-bs-toggle="dropdown">
-          Welcome {{ current_user.username }}! </a>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href={{ url_for('logout') }}> Logout</a></li>
-        </ul>
-      </li>
+      <li class="nav-item"><a class="nav-link" href={{ url_for('main') }}>Main </a></li>
+      <li class="nav-item"><a class="nav-link" href={{ url_for('main') }}>Transaction History </a></li>
+      <li class="nav-item"><a class="nav-link" href={{ url_for('main') }}>Transfer </a></li>
+      <li class="nav-item"><a class="nav-link" href={{ url_for('main') }}>Withdraw </a></li>
+      <li class="nav-item"><a class="nav-link" href={{ url_for('logout') }}>Logout</a></li>
       {% endif %}
     </ul>
   </div>
