@@ -2,11 +2,9 @@ from application import app
 from application.forms import *
 from application.models import *
 from flask import render_template, request, flash, redirect, json, jsonify, url_for, make_response, send_file
-from flask_login import login_user, login_required, current_user, logout_user, AnonymousUserMixin
+from flask_login import login_user, login_required, current_user, logout_user, AnonymousUserMixin, LoginManager
 from werkzeug.security import generate_password_hash, check_password_hash
-
-with app.app_context():
-    db.create_all()
+import random
 
 with app.app_context():
     db.create_all()
@@ -15,6 +13,14 @@ with app.app_context():
 @app.route('/') 
 def index():
     return render_template('index.html')
+
+# Page route for the main page
+@app.route('/main', methods=['GET'])
+@login_required 
+def main():
+    randomNumber = random.randint(10000, 99999)
+    accountId =  int('12' + str(current_user.user_id ) + str(randomNumber))
+    return render_template('main.html', title = 'Main', accountId = accountId)
 
 # Page route for the login page
 @app.route('/login', methods=['GET', 'POST'])
@@ -40,7 +46,7 @@ def login():
             return redirect(url_for('login'))
         # If the credentials are correct we login the user and direct them to the home page
         login_user(user)
-        return redirect(url_for('index'))
+        return redirect(url_for('main'))
     # Loads the login page
     return render_template("login.html", form = form, title = 'Login')
 
@@ -72,7 +78,6 @@ def register():
                 # If the username already exists in the database we refresh the page and display an error message
                 flash('Username already exists', 'warning')
                 return redirect(url_for('register'))
-                return redirect(url_for('register'))
             
             # Create a new user in the database
             new_user = User(email = email, username = username, password = generate_password_hash(password, method='pbkdf2:sha256'), fullname = fullname, balance = 0.00)
@@ -98,7 +103,7 @@ def register():
 # Logout button
 # You need to be logged in to use it
 @app.route('/logout')
-# @login_required
+@login_required
 def logout():
     if current_user.is_authenticated:
         logout_user()

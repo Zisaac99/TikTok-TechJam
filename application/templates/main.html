@@ -1,0 +1,40 @@
+<!-- Purpose: HTML code for the registration page -->
+
+<!--Inherits CSS created for the design of this page-->
+<link rel="stylesheet" href="{{ url_for('static',filename='css/main.css')}}" />
+
+<!-- Inherits from layout.html -->
+{% extends "layout.html" %}
+
+<!-- The block content replace the one encapsulated in  layout.html -->
+{% block content %}
+<div class='welcome'>
+    <div>Welcome {{ current_user.fullname }}</div>
+</div>
+
+<div class="d-grid gap1">
+    <div id="full" class="d-flex mb-1">
+        <button type="button" class="btn btn-success flex-fill me-1" href=''>Transaction
+            History</button>
+        <button type="button" class="btn btn-success flex-fill me-1" href=''>Transfer</button>
+        <button type="button" class="btn btn-success flex-fill" href=''>Withdraw</button>
+    </div>
+</div>
+
+<div class="account">
+    Account
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-3">Account ID</div>
+        <div class="col-9">{{ accountId }}</div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-3">Balance</div>
+        <div class="col-9">{{ current_user.balance}}</div>
+    </div>
+</div>
+{% endblock %}
