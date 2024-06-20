@@ -9,6 +9,9 @@ import random
 with app.app_context():
     db.create_all()
 
+# global accountIdIncrement
+accountIdIncrement = 9000000000
+
 #Handles http://127.0.0.1:5000/
 @app.route('/') 
 def index():
@@ -56,7 +59,7 @@ def register():
     form = registerForm()
     if request.method == 'POST':
         # Generate accountId
-        accountId = int(current_user.user_id + 9000000000)
+        
         # Retrieve the full name from the form sent
         fullname = form.fullname.data
         # Retrieve the email from the form sent
@@ -81,9 +84,13 @@ def register():
                 return redirect(url_for('register'))
             
             # Create a new user in the database
-            new_user = User(email = email, accountId = accountId, username = username, password = generate_password_hash(password, method='pbkdf2:sha256'), fullname = fullname, balance = 0.00)
-
+            new_user = User(email = email, accountId = 0, username = username, password = generate_password_hash(password, method='pbkdf2:sha256'), fullname = fullname, balance = 0.00)
             db.session.add(new_user)
+            db.session.commit()
+            
+            # Retrieve the user_id that was just created and use it to generate and update the user's account id
+            user = User.query.filter_by(user_id = new_user.user_id).first()
+            user.accountId = User.user_id + accountIdIncrement
             db.session.commit()
 
             # Direct the user to the login page and display a success message
