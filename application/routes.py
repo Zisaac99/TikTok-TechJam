@@ -18,8 +18,7 @@ def index():
 @app.route('/main', methods=['GET'])
 @login_required 
 def main():
-    randomNumber = random.randint(10000, 99999)
-    accountId =  int('12' + str(current_user.user_id ) + str(randomNumber))
+    accountId =  int(current_user.user_id + 9000000000)
     return render_template('main.html', title = 'Main', accountId = accountId)
 
 # Page route for the login page
