@@ -9,12 +9,13 @@ class User(UserMixin, db.Model):
 
     # Primary Key
     user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    accountId = db.Column(db.Integer)
     fullname = db.Column(db.String(1000))
     email = db.Column(db.String(1000))
     username = db.Column(db.String(1000))
     password = db.Column(db.String(1000))
     fullname = db.Column(db.String(1000))
-    balance = db.Column(db.String(1000)) # store balance as string will convert back for calculation
+    balance = db.Column(db.String(1000))
 
     # Establish relationship with transaction table
     transaction = db.relationship('Transaction')
@@ -30,8 +31,9 @@ class Transaction(db.Model):
 
     # Primary Key
     transaction_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    amount = db.Column(db.String(1000)) # store balance as string will convert back for calculation
-    type = db.Column(db.Integer) #0 for deposit, 1 for transaction
+    amount = db.Column(db.String(1000))
+    type = db.Column(db.String(1000))
+    accountId = db.Column(db.Integer)
     date = db.Column(db.DateTime(timezone=True))
     # Foreign Key
     fk_user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
