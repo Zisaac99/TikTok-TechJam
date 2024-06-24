@@ -1,0 +1,168 @@
+/* Purpose: CSS for the registration page */
+
+.error-message{
+    color: red;
+}
+.transfer-form {
+    position: relative;
+    min-height: 65vh;
+    z-index: 0;
+    padding: 40px;
+    justify-content: center;
+    display: grid;
+    align-items: center;
+}
+
+.transfer-form::after {
+    content: "";
+    /* background: url('../images/multiuser.jpg'); */
+    opacity: 0.5;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;   
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+div.content{
+    width: 60%;
+    margin-left: 20%;
+}
+
+input.submitButton{
+    margin-left: 35%;
+}
+
+.transfer-form h2 {
+    font-size: 30px;
+    line-height: 40px;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #272346;
+    text-align: center;
+}
+
+/* .transfer-form .main { 
+    position: relative;
+    display: flex;
+    margin: 30px 0;
+} */
+
+.content {
+    flex-basis: 60%;
+    padding: 3em 3em;
+    background: #fff;
+    box-shadow: 2px 9px 48px -17px rgba(0,0,0,0.1);
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.form-img {
+    flex-basis: 40%;
+    background: #fff;
+    background-size: cover;
+    padding: 40px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    align-items: center;
+    display: grid; 
+}
+
+.registerImage {
+    max-width:100%;
+    max-height:100%;
+    height: auto;
+}
+
+p {
+    color: #666;
+    font-size: 16px;
+    line-height: 25px;
+    opacity: 0.6;
+    text-align: center;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* .transfer-form form {
+    margin: 30px 0;
+} */
+
+.transfer-form input[type=text], input[type=email], .register-form input[type=password]{
+    border-radius: 35px;
+    outline: none;
+    margin-bottom: 15px;
+    font-stretch: 16px;
+    color: #999;
+    text-align: left;
+    padding: 14px 20px;
+    width: 100%;
+    display: inline-block;
+    box-sizing: border-box;
+    border: 1px solid #e5e5e5;
+    background: #f7fafc;
+    transition: 0.3s ease;
+}
+
+.transfer-form input[type=submit] {
+    border-radius: 35px;
+    font-size: 18px;
+    color: #fff;
+    width: 30%;
+    background-color: #0568c1;
+    border: none;
+    padding: 14px 15px;
+    font-weight: 500;
+    transition: 0.3s ease;
+}
+
+.transfer-form input[type=submit]:hover {
+    background: #4C586F;
+}
+
+p.account, p.account a {
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 0;
+    font-size: 16px;
+    color: #333;
+}
+
+p.account a {
+    color: #0568c1;
+}
+
+p.account a:hover {
+    text-decoration: underline;
+}
+
+/** Responsive */
+
+@media(max-width: 736px) {
+    .transfer-form .main {
+        flex-direction: column;
+    }
+    .transfer-form form {
+        margin-top: 30px;
+        margin-bottom: 10px;
+    }
+    .form-img {
+        border-radius: 0;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+        order: 2;
+    }
+    .content {
+        order: 1;
+        border-radius: 0;
+        border-top-left-radius: 8px;   
+        border-top-left-radius:8px;
+         
+    }
+}
