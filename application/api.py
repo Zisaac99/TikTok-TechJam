@@ -4,10 +4,11 @@ from application.models import *
 from flask import render_template, request, flash, redirect, json, jsonify, url_for, make_response, send_file
 from flask_login import login_user, login_required, current_user, logout_user, AnonymousUserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
-from application.api import *
+from application.routes import *
 import math
 import random
 from datetime import datetime
+from application import *
 
 
 def generateDummyData():
@@ -57,7 +58,6 @@ def ssp_transaction(id,value,col,ot,p,pp):
             query = query.paginate(page=p, per_page=pp)
             result = query.items
 
-        print(result)
         # Loop through the filtered records
         for i in range(len(result)):
             trans.append({
@@ -88,6 +88,7 @@ def generate():
 @app.route('/api/ssp_transaction', methods=['GET']) 
 def api_ssp_transaction():
     userid = current_user.user_id
+
     # Get the information sent from the job page table
     request_values = request.values
 
@@ -101,10 +102,17 @@ def api_ssp_transaction():
     columns = [Transaction.transaction_id, Transaction.amount, Transaction.type, Transaction.date]
 
     # Get the integer which tells us which column needs to be ordered
-    column_to_order = int(request_values['order[0][column]'])
+    # if 'order[0][column]' in request_values:
+    if 'order[0][column]' in request_values:
+        column_to_order = int(request_values['order[0][column]'])
+    else:
+        column_to_order = 0
     
     # Order type of the column
-    order_type = str(request_values['order[0][dir]'])
+    if 'order[0][column]' in request_values:
+        order_type = str(request_values['order[0][dir]'])
+    else:
+        order_type = 'asc'
 
     # Number of records per page in the table
     per_page = int(request_values['length'])
