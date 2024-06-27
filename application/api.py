@@ -26,7 +26,7 @@ def ssp_transaction(id,value,col,ot,p,pp):
     try:
         query = Transaction.query
         # Get the total number of records from the Job table
-        total_count = query.count()
+        total_count = query.filter_by(fk_user_id = id).count()
 
         # Create an array to store the dictionary of data for each row later
         trans = []
