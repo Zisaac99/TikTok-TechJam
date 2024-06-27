@@ -6,21 +6,77 @@ from flask_login import login_user, login_required, current_user, logout_user, A
 from werkzeug.security import generate_password_hash, check_password_hash
 from application.api import *
 import math
+import datetime
 
 # global accountIdIncrement
 accountIdIncrement = 9000000000
+with app.app_context():
+    db.create_all()
 
 #Handles http://127.0.0.1:5000/
 @app.route('/') 
 def index():
     return render_template('index.html')
 
+# Page route for the withdraw page
+@app.route('/withdraw', methods=['GET', 'POST'])
+@login_required 
+def withdraw():
+    # Retrieve the form 
+    form = withdrawForm()
+
+    # Check if the ATM exist
+    if request.method == 'POST':
+        # Check if the form is filled up correctly
+        if form.validate_on_submit():
+            # Retrieve the current user
+            userId = current_user.user_id
+            # Retrieve the atmId from the form sent
+            atmNumber = int(form.atmNumber.data)
+            # Retrieve the amount from the form sent
+            withdrawAmount = int(form.withdrawAmount.data)
+
+            # Query the ATM table to see if the ATM is in the database
+            atm = ATM.query.filter_by(atmNumber = atmNumber).first()
+            atmBalance = ATM.query.filter_by(atmNumber = atmNumber).first()
+
+            # Query the User table to see the user balance in the database
+            user = User.query.filter_by(user_id = userId).first()        
+            userBalance = float(user.balance)
+
+            if not atm:
+                flash('ATM does not exist, please try again.', 'warning')
+                return redirect(url_for('withdraw'))
+            
+            if withdrawAmount > atmBalance:
+                flash('ATM does not have enough funds, please withdraw a smaller amount or go to another ATM.', 'warning')
+                return redirect(url_for('withdraw'))
+            
+            if withdrawAmount > userBalance:
+                flash('You do not have enough money to withdraw in your account, please withdraw a smaller amount.', 'warning')
+                return redirect(url_for('withdraw'))
+            
+            userBalance -= withdrawAmount
+            timeNow = datetime.now()
+            withdrawTransaction = Transaction(amount = str(-1 * withdrawAmount), type = "Withdraw", accountId = user.accountId, date = timeNow, fk_user_id = userId)
+
+            db.session.add(withdrawTransaction)
+            db.session.commit()
+
+            flash(f"${withdrawAmount} was successfully withdrawn at ATM {atmNumber}","success")
+            return render_template("withdraw.html", form = form, title = 'Withdraw')
+
+        else:
+            flash("Invalid ATM Number or Withdrawl Amount. Please check again!","warning")
+            return render_template("withdraw.html", form = form, title = 'Withdraw')
+
+    return render_template('withdraw.html', form = form, title = 'Withdraw')
+
 # Page route for the main page
 @app.route('/main', methods=['GET'])
 @login_required 
 def main():
-    accountId =  int(current_user.user_id + 9000000000)
-    return render_template('main.html', title = 'Main', accountId = accountId)
+    return render_template('main.html', title = 'Main')
 
 # Page route for the login page
 @app.route('/login', methods=['GET', 'POST'])

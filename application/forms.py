@@ -1,4 +1,4 @@
-from wtforms import FileField, SubmitField, FloatField, StringField, validators, PasswordField, EmailField
+from wtforms import FileField, SubmitField, FloatField, StringField, validators, PasswordField, EmailField, IntegerField
 from flask_wtf import FlaskForm
 
 
@@ -17,3 +17,10 @@ class registerForm(FlaskForm):
             validators.EqualTo('password', message='Passwords must match.')
         ])
     submit = SubmitField("Register")
+
+class withdrawForm(FlaskForm):
+    atmNumber = StringField('ATM Number', validators=[validators.InputRequired()])
+    withdrawAmount = IntegerField('Withdrawal Amount', validators=[
+                    validators.InputRequired(), 
+                    validators.NumberRange(min=0, max=10000000000, message="Please enter a valid withdrawal amount.")])
+    submit = SubmitField("Withdraw")
