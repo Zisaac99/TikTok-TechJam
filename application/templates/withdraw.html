@@ -1,0 +1,43 @@
+<!-- Purpose: HTML code for the registration page -->
+
+<!--Inherits CSS created for the design of this page-->
+<link rel="stylesheet" href="{{ url_for('static',filename='css/transfer.css')}}" />
+
+<!-- Inherits from layout.html -->
+{% extends "layout.html" %}
+
+<!-- The block content replace the one encapsulated in  layout.html -->
+{% block content %}
+
+<div class='row withdraw-form'>
+    <div class='container'>
+        <div class='main'>
+            <div class='content'>
+                <h2>Withdraw</h2>
+                <br>
+                <br>
+                <!-- Register form to pass data to the backend -->
+                <form name='frmWithdraw' action='/withdraw' method='POST'>
+                    {{ form.hidden_tag() }}
+                    
+                    <h5>ATM Number</h5>
+                    <!-- {% for error in form.atmNumber.errors %}
+                    <span class="error-message">{{ error }}</span>
+                    {% endfor %} -->
+                    <input type='text' id='atmNumber' name='atmNumber' placeholder='123456789' required>
+                    
+                    <h5>Amount</h5>
+                    <!-- {% for error in form.withdrawAmount.errors %}
+                    <span class="error-message">{{ error }}</span>
+                    {% endfor %} -->
+                    <input type='text' id='withdrawAmount' name='withdrawAmount' placeholder='50' required>
+
+                    <!-- Submit button -->
+                    <input class='submitButton' type='submit' id='submit' name='submit' value='Withdraw'>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
