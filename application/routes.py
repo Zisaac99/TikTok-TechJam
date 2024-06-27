@@ -117,35 +117,34 @@ def transaction():
     if current_user.is_authenticated:
         return render_template("transaction.html", title = 'Transactions')
     flash("Please login", "warning")
-    return redirect(url_for("index"))
+    return redirect(url_for("login"))
 
 # Transfer page
 # You need to be logged in to use it
 @app.route('/transfer', methods=['GET', 'POST'])
 def transfer():
-    form = transferForm()
     if current_user.is_authenticated:
         form = transferForm()
         if request.method == 'POST':
             if form.validate_on_submit():
                 accountNum = int(form.accountNum.data)
-                amount = float(form.amount.data)
+                amount = str(form.amount.data)
                 
                 currUserId = current_user.user_id
 
                 user = User.query.filter_by(user_id = currUserId).first()
                 user2 = User.query.filter_by(accountId = accountNum).first()
-                userBal = float(user.balance)
+                userBal = user.balance
 
                 if user.accountId == accountNum:
                     flash(f"Cannot transfer money to yourself","warning")
                     return render_template("transfer.html", form = form, title = 'Transfer')
 
-                if amount <= 0:
+                if float(amount) <= 0:
                     flash(f"Invalid balance","warning")
                     return render_template("transfer.html", form = form, title = 'Transfer')
 
-                if userBal < amount:
+                if float(userBal) < float(amount):
                     flash(f"Insufficient balance","warning")
                     return render_template("transfer.html", form = form, title = 'Transfer')
                 
@@ -160,12 +159,13 @@ def transfer():
                     flash(f"User does not exist","warning")
                     return render_template("transfer.html", form = form, title = 'Transfer')
                 
-                user.balance = str(userBal - amount)
-                recipient.balance = str(float(recipient.balance) + amount)
+                user.balance = addOrMinusMoney(userBal,amount,"minus")
+                recipient.balance = addOrMinusMoney(recipient.balance,amount,"add")
                 
                 timeNow = datetime.now()
-                userTransaction = Transaction(amount = str(-1 * amount), type = "Transfer", accountId = accountNum, date = timeNow,fk_user_id = currUserId)
-                recipientTransaction = Transaction(amount = str(amount), type = "Transfer", accountId = user.accountId, date = timeNow, fk_user_id = user2.user_id)
+                print(amount)
+                userTransaction = Transaction(amount = str("-" + amount), type = "Transfer", accountId = accountNum, date = timeNow,fk_user_id = currUserId)
+                recipientTransaction = Transaction(amount = amount, type = "Transfer", accountId = user.accountId, date = timeNow, fk_user_id = user2.user_id)
 
                 db.session.add(userTransaction)
                 db.session.add(recipientTransaction)
@@ -176,6 +176,53 @@ def transfer():
                 flash("Invalid Account Number or Balance. Please check again!","warning")
                 return render_template("transfer.html", form = form, title = 'Transfer')
         return render_template("transfer.html", form = form, title = 'Transfer')
+    flash("Please login", "warning")
+    return redirect(url_for("login"))
+
+# Deposit page
+# You need to be logged in to use it
+@app.route('/deposit', methods=['GET', 'POST'])
+def deposit():
+    form = depositForm()
+    if current_user.is_authenticated:
+        if request.method == 'POST':
+            if form.validate_on_submit(): 
+                code = form.code.data
+
+                get_code = Code.query.filter_by(code = code).first()
+
+                if not get_code:
+                    flash("Invalid Code", "warning")
+                    return render_template("deposit.html", form = form, title = 'Deposit')
+                
+                
+                if get_code.isActivated:
+                    flash("Code has already been used", "warning")
+                    return render_template("deposit.html", form = form, title = 'Deposit') 
+                
+                currUserId = current_user.user_id
+                
+                amount = get_code.amount
+
+                get_code.isActivated = True
+
+                user = User.query.filter_by(user_id = currUserId).first()
+
+                newBal = addOrMinusMoney(user.balance,amount,"add")
+                user.balance = newBal
+
+                timeNow = datetime.now()
+
+                userTransaction = Transaction(amount = amount, type = "Deposit", accountId = "-", date = timeNow,fk_user_id = currUserId)
+
+                db.session.add(userTransaction)
+                db.session.commit()
+
+                flash(f"${amount} has been added to your account. Your balance is now: ${newBal}", "success")
+                return render_template("deposit.html", form = form, title = 'Deposit')
+            else:
+                return render_template("deposit.html", form = form, title = 'Deposit')
+        return render_template("deposit.html", form = form, title = 'Deposit')
     flash("Please login", "warning")
     return redirect(url_for("login"))
 
