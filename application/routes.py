@@ -141,6 +141,11 @@ def transfer():
                 if userBal < amount:
                     flash(f"Insufficient balance","warning")
                     return render_template("transfer.html", form = form, title = 'Transfer')
+                
+                splitAmt = str(amount).split(".")
+                if len(splitAmt) > 1 and len(splitAmt[1]) > 2:
+                    flash(f"Please input an amount up to 2dp","warning")
+                    return render_template("transfer.html", form = form, title = 'Transfer')
 
                 recipient = User.query.filter_by(accountId = accountNum).first()
 
