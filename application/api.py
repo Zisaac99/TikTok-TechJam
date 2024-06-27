@@ -10,6 +10,52 @@ import random
 from datetime import datetime
 from application import *
 
+# Used to add or minus using str amounts as using float will lead to inaccuracies
+# It is already assumed that the max dp for the str amounts is 2dp
+def addOrMinusMoney(currAmount, addAmount, type):
+    currSplit = currAmount.split(".")
+    addSplit = str(addAmount).split(".")
+    centsMax = 100
+
+    currDollars = int(currSplit[0])
+
+    if len(currSplit) > 1 and len(currSplit[1]) == 1:
+        currCents = int(currSplit[1]) * 10
+    elif len(currSplit) > 1 and len(currSplit[1]) > 1:
+        currCents = int(currSplit[1])
+    else:
+        currCents = 0
+
+    addDollars = int(addSplit[0])
+
+    if len(addSplit) > 1 and len(addSplit[1]) == 1:
+        addCents = int(addSplit[1]) * 10
+    elif len(addSplit) > 1 and len(addSplit[1]) > 1:
+        addCents = int(addSplit[1])
+    else:
+        addCents = 0
+
+    newDollars = 0
+    newCents = 0
+
+    if type == "add":
+        newDollars = currDollars + addDollars
+        newCents = currCents + addCents
+
+        if newCents > centsMax:
+            newCents -= centsMax
+            newDollars += 1
+    else:
+        newDollars = currDollars - addDollars
+        newCents = currCents - addCents
+
+        if newCents < 0:
+            newCents += centsMax
+            newDollars -= 1
+
+    return str(f"{newDollars}.{newCents}")
+          
+
 
 def generateDummyData():
     types = ["Withdrawal","Deposit","Transfer"]
@@ -80,10 +126,9 @@ def ssp_transaction(id,value,col,ot,p,pp):
 def generate():
     try:
         generateDummyData()
+        return jsonify({'Success': "100 Dummy transaction's data was successfully generated!"})
     except Exception as e:
         return jsonify({'Error': str(e)})
-    else:
-        return jsonify({'Success': "100 Dummy transaction's data was successfully generated!"})
     
 @app.route('/api/ssp_transaction', methods=['GET']) 
 def api_ssp_transaction():
@@ -130,3 +175,28 @@ def api_ssp_transaction():
     # We need to return the current draw number, total number of records in the table,
     # total number of records filtered, and the data to be displayed
     return jsonify({'draw':draw,'recordsTotal':results[0],'recordsFiltered':results[1],'data':job})
+
+@app.route('/api/add_code', methods=['POST'])
+def api_add_code():
+    try:
+        code = request.values['code']
+        amount = request.values['amount']
+        
+        codeExist = Code.query.filter_by(code = code).first()
+
+        if codeExist:
+            return jsonify({"Error":f"Code: {code} already exists in the database"})
+
+        if float(amount) < 0:
+            return jsonify({"Error":"Amount cannot be negative!"})
+        
+        amtSplit = amount.split(".")
+        if len(amtSplit) > 1 and len(amtSplit[1]) > 2:
+            return jsonify({"Error":"Amount must at max be 2dp!"})
+            
+        new_code = Code(code = code, amount = amount, isActivated = False)
+        db.session.add(new_code)
+        db.session.commit()
+        return jsonify({"Success":f"Code: {code} of ${amount} was successfully created"})
+    except Exception as e:
+        return jsonify({'Error':str(e)})
