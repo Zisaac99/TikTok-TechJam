@@ -22,3 +22,7 @@ class transferForm(FlaskForm):
     accountNum = IntegerField('Account Number', validators=[validators.InputRequired(), validators.NumberRange(min=0, max=10000000000)])
     amount = DecimalField('Amount', places=2, validators=[validators.InputRequired()])
     submit = SubmitField("Transfer")
+
+class depositForm(FlaskForm):
+    code = StringField('code', [validators.InputRequired()])
+    submit = SubmitField("Deposit")
