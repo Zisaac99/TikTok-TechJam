@@ -19,19 +19,23 @@
         <div class='main'>
             <div class='content'>
                 <h2>Transfer</h2>
+                <br>
+                <br>
                 <!-- Register form to pass data to the backend -->
                 <form name='frmTransfer' action='/transfer' method='POST'>
                     {{ form.hidden_tag() }}
                     
+                    <h5>Account Number</h5>
                     {% for error in form.accountNum.errors %}
                     <span class="error-message">{{ error }}</span>
                     {% endfor %}
-                    <input type='text' id='accountNum' name='accountNum' placeholder='Account Number' required>
-
+                    <input type='text' id='accountNum' name='accountNum' placeholder='Eg. 9000000015' required>
+                    
+                    <h5>Amount</h5>
                     {% for error in form.amount.errors %}
                     <span class="error-message">{{ error }}</span>
                     {% endfor %}
-                    <input type='text' id='amount' name='amount' placeholder='Amount' required>
+                    <input type='text' id='amount' name='amount' placeholder='Eg. 2.5' required>
 
                     <!-- Submit button -->
                     <input class='submitButton' type='submit' id='submit' name='submit' value='Transfer'>
