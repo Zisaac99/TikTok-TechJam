@@ -17,19 +17,20 @@
                 <br>
                 <br>
                 <!-- Register form to pass data to the backend -->
-                <form name='frmWithdraw' action='/withdraw' method='POST'>
+                <form name='frmWithdraw' action='/withdraw' method='POST' ,
+                    onsubmit="return confirm('Are you sure you want to withdraw from this ATM?');">
                     {{ form.hidden_tag() }}
-                    
+
                     <h5>ATM Number</h5>
-                    <!-- {% for error in form.atmNumber.errors %}
+                    {% for error in form.atmNumber.errors %}
                     <span class="error-message">{{ error }}</span>
-                    {% endfor %} -->
+                    {% endfor %}
                     <input type='text' id='atmNumber' name='atmNumber' placeholder='123456789' required>
-                    
+
                     <h5>Amount</h5>
-                    <!-- {% for error in form.withdrawAmount.errors %}
+                    {% for error in form.withdrawAmount.errors %}
                     <span class="error-message">{{ error }}</span>
-                    {% endfor %} -->
+                    {% endfor %}
                     <input type='text' id='withdrawAmount' name='withdrawAmount' placeholder='50' required>
 
                     <!-- Submit button -->
