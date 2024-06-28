@@ -1,4 +1,4 @@
-from wtforms import FileField, SubmitField, FloatField, StringField, validators, PasswordField, EmailField, IntegerField
+from wtforms import FileField, SubmitField, FloatField, StringField, validators, PasswordField, EmailField, IntegerField, DecimalField, IntegerField
 from flask_wtf import FlaskForm
 
 
@@ -17,6 +17,12 @@ class registerForm(FlaskForm):
             validators.EqualTo('password', message='Passwords must match.')
         ])
     submit = SubmitField("Register")
+
+class transferForm(FlaskForm):
+    accountNum = IntegerField('Account Number', validators=[validators.InputRequired(), validators.NumberRange(min=0, max=10000000000)])
+    amount = DecimalField('Amount', places=2, validators=[validators.InputRequired()])
+    submit = SubmitField("Transfer")
+
 
 class withdrawForm(FlaskForm):
     atmNumber = StringField('ATM Number', validators=[validators.InputRequired()])

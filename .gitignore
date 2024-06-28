@@ -12,6 +12,7 @@ secrets.txt
 .idea/*
 .idea
 env
+.env
 venv
 database.db
 .vscode

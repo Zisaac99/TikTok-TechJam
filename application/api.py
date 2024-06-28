@@ -26,7 +26,7 @@ def ssp_transaction(id,value,col,ot,p,pp):
     try:
         query = Transaction.query
         # Get the total number of records from the Job table
-        total_count = query.count()
+        total_count = query.filter_by(fk_user_id = id).count()
 
         # Create an array to store the dictionary of data for each row later
         trans = []
@@ -61,10 +61,10 @@ def ssp_transaction(id,value,col,ot,p,pp):
         # Loop through the filtered records
         for i in range(len(result)):
             trans.append({
-                'transaction_id': result[i].transaction_id,
+                'date': result[i].date,
                 'amount': result[i].amount,
                 'type': result[i].type,
-                'date': result[i].date
+                'accountId': result[i].accountId
             })
 
         # Return the total count, filtered count, and data in the form of an array that stores the dictionary of each row
@@ -99,7 +99,7 @@ def api_ssp_transaction():
     search = str(request_values['search[value]'])
 
     # Store the columns of the datatables in an array
-    columns = [Transaction.transaction_id, Transaction.amount, Transaction.type, Transaction.date]
+    columns = [Transaction.date, Transaction.amount, Transaction.type, Transaction.accountId]
 
     # Get the integer which tells us which column needs to be ordered
     # if 'order[0][column]' in request_values:

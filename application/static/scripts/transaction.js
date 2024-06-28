@@ -6,11 +6,10 @@ $(document).ready(function () {
                 "url": "/api/ssp_transaction"
             },// Data that is returned from the api and here we set which columns the data belongs to
             "columns": [
-                { "data": "transaction_id" },
+                { "data": "date" },
                 { "data": "amount" },
                 { "data": "type" },
-                { "data": "date" },
-
+                { "data": "accountId" }
             ]
         });
         
