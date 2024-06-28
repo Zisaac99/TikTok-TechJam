@@ -7,7 +7,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from application.api import *
 from datetime import datetime
 import math
-import datetime
 
 # global accountIdIncrement
 accountIdIncrement = 9000000000
@@ -42,8 +41,7 @@ def withdraw():
 
             # Query the ATM table to see if the ATM is in the database
             atm = ATM.query.filter_by(atmNumber = atmNumber).first()
-            atmBalance = ATM.query.filter_by(atmNumber = atmNumber).first()
-
+            
             # Query the User table to see the user balance in the database
             user = User.query.filter_by(user_id = userId).first()        
             userBalance = float(user.balance)
@@ -52,17 +50,21 @@ def withdraw():
                 flash('ATM does not exist, please try again.', 'warning')
                 return redirect(url_for('withdraw'))
             
-            if withdrawAmount > atmBalance:
-                flash('ATM does not have enough funds, please withdraw a smaller amount or go to another ATM.', 'warning')
-                return redirect(url_for('withdraw'))
+            atmBalance = atm.withdrawAmount
             
             if withdrawAmount > userBalance:
                 flash('You do not have enough money to withdraw in your account, please withdraw a smaller amount.', 'warning')
                 return redirect(url_for('withdraw'))
             
+            if withdrawAmount > atmBalance:
+                flash('ATM does not have enough funds, please withdraw a smaller amount or go to another ATM.', 'warning')
+                return redirect(url_for('withdraw'))
+            
             userBalance -= withdrawAmount
             timeNow = datetime.now()
+
             withdrawTransaction = Transaction(amount = str(-1 * withdrawAmount), type = "Withdraw", accountId = user.accountId, date = timeNow, fk_user_id = userId)
+            user.balance = str(userBalance)
 
             db.session.add(withdrawTransaction)
             db.session.commit()
