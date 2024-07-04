@@ -1,7 +1,7 @@
 /* Purpose: CSS for the login page */
 
 .login-form {
-    position: relative;
+    position: center;
     min-height: 65vh;
     z-index: 0;
     padding: 40px;
