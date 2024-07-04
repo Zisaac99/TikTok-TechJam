@@ -10,10 +10,6 @@
 {% block content %}
 
 <!-- Flashes message during error -->
-<!-- {% for category, message in get_flashed_messages(with_categories=True) %}
-<div class="alert-{{category}} text-center">{{ message }}</div>
-{% endfor %} -->
-
 <div class='row login-form'>
     <div class='container'>
         <div class='main'>
@@ -31,19 +27,16 @@
                     {% for error in form.password.errors %}
                     <span class="error-message">{{ error }}</span>
                     {% endfor %}
-                    
+
                     <!-- Submit button -->
                     <input class='submitButton' type='submit' id='submit' name='submit' value='Login'>
                 </form>
                 <!-- Navigate to register page -->
                 <p class='account'> Don't have an account? <a href='/register'>Register</a></p>
             </div>
-            <!-- Image
-            <div class='form-img'>
-                <img class='loginImage' src='../static/images/login.jpg'>
-            </div> -->
         </div>
     </div>
 </div>
+
 
 {% endblock %}
