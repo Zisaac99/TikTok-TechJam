@@ -1,18 +1,115 @@
-.welcome {
-    text-align: center;
-    margin: 30px;
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+.main{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-wrap{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #EBEBEB;
+    border-radius: 28px;
+    width: 66%;
+}
+
+.welcome {
+    display: flex;
+    justify-content: flex-start;
+    text-align: center;
+    margin-bottom: 30px;
+    margin-top: 10px;
+    /* margin-right: 50%; */
+    font-size: 35px;
+    font-family: "Playfair Display", serif;
+}
+
+.buttonss{
+    width:100%;
+    display: flex;
+    justify-content: space-around;
+}
 .account {
     text-align: center;
-    margin: 30px;
+    font-size: 35px;
+    margin-top: 20px;
+    font-family: "Playfair Display", serif;
 }
 
 .container {
     text-align: center;
     margin: 30px;
+    font-size: 25px;
+    font-family: "Playfair Display", serif;
 }
 
 .accountID {
     text-align: center;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e3f2fd;
+}
+
+/* Credit Card */
+.container-card {
+  font-family: "Poppins", sans-serif;
+  position: relative;
+  background-color: paleturquoise;
+  background-size: cover;
+  padding: 25px;
+  border-radius: 28px;
+  max-width: 380px;
+  width: 100%;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+header,
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo img {
+  width: 48px;
+  margin-right: 10px;
+}
+h5 {
+  font-size: 16px;
+  font-weight: 400;
+  color: #fff;
+}
+header .chip {
+  width: 60px;
+}
+h6 {
+  color: #fff;
+  font-size: 10px;
+  font-weight: 400;
+}
+h5.number {
+  margin-top: 4px;
+  font-size: 18px;
+  letter-spacing: 1px;
+}
+h5.name {
+  margin-top: 20px;
+}
+.container-card .card-details {
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
 }
