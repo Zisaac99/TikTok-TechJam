@@ -5,30 +5,36 @@
 <!-- Inherits from layout.html -->
 {% extends "layout.html" %}
 
-{% block Transactionjsscript %}<script src="../static/scripts/transaction.js"></script>{% endblock %}
-{% block Transactioncssscript %}<link rel="stylesheet" href="../static/css/transaction.css" />{% endblock %}
+{% block Transactionjsscript %}
+<script src="../static/scripts/transaction.js"></script>{% endblock %}
+{% block Transactioncssscript %}
+<link rel="stylesheet" href="../static/css/transaction.css" />{% endblock %}
 <!-- The block content replace the one encapsulated in  layout.html -->
 {% block content %}
-<div id="table">
-    <div class="container">
-        <table id="myTable" class="display" style="overflow-x:auto;">
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Amount ($)</th>
-                    <th>Type</th>
-                    <th>Account Number</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </tbody>
-        </table>
+
+<div class="container">
+    <h1>Transactions</h1>
+    <div id="table">
+        <div class="container">
+            <table id="myTable" class="display" style="overflow-x:auto;">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Amount ($)</th>
+                        <th>Type</th>
+                        <th>Account Number</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 {% endblock %}
