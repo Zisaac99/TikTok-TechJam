@@ -31,6 +31,8 @@
 div.content{
     width: 60%;
     margin-left: 20%;
+    border-radius: 28px;
+    background-color: #EBEBEB;
 }
 
 input.submitButton{
