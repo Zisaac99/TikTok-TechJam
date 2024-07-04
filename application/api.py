@@ -200,3 +200,31 @@ def api_add_code():
         return jsonify({"Success":f"Code: {code} of ${amount} was successfully created"})
     except Exception as e:
         return jsonify({'Error':str(e)})
+    
+@app.route('/api/add_atm', methods=['POST'])
+def api_add_atm():
+    try:
+        atm = request.values['atm']
+        withdraw = request.values['withdraw']
+
+        atmExist = ATM.query.filter_by(atmNumber = atm).first()
+
+        if "." in withdraw:
+            return jsonify({"Error":"Withdrawl amount must not contain decimals!"})
+
+        withdraw = int(withdraw)
+
+        if withdraw < 0:
+            return jsonify({"Error":"ATM max withdrawl amount cannot be negative!"})
+
+        if atmExist:
+            atmExist.withdrawAmount = ATM.withdrawAmount + withdraw
+            db.session.commit()
+            return jsonify({"Success":f"ATM: {atm} has been topped up with with ${withdraw}."})
+
+        new_atm = ATM(atmNumber = atm, withdrawAmount = withdraw)
+        db.session.add(new_atm)
+        db.session.commit()
+        return jsonify({"Success":f"ATM: {atm} with max withdrawl amount of ${withdraw} was successfully created"})
+    except Exception as e:
+        return jsonify({'Error':str(e)})
