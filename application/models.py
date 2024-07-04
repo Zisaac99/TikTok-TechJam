@@ -38,6 +38,16 @@ class Transaction(db.Model):
     # Foreign Key
     fk_user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
 
+class ATM(db.Model):
+    __tablename__ ='atm'
+
+    # Transaction table columns
+
+    # Primary Key
+    atm_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    atmNumber = db.Column(db.Integer)
+    withdrawAmount = db.Column(db.Integer) # store balance as string will convert back for calculation
+
 # Code Table
 class Code(db.Model):
     __tablename__ ='code'
