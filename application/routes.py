@@ -15,11 +15,6 @@ with app.app_context():
 # global accountIdIncrement
 accountIdIncrement = 9000000000
 
-#Handles http://127.0.0.1:5000/
-@app.route('/') 
-def index():
-    return render_template('index.html')
-
 # Page route for the withdraw page
 @app.route('/withdraw', methods=['GET', 'POST'])
 @login_required 
@@ -84,6 +79,7 @@ def main():
     return render_template('main.html', title = 'Main')
 
 # Page route for the login page
+@app.route('/')
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     # Retrieve the form 
