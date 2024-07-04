@@ -166,6 +166,7 @@ def register():
 # Transaction page
 # You need to be logged in to use it
 @app.route('/transaction')
+@login_required
 def transaction():
     if current_user.is_authenticated:
         return render_template("transaction.html", title = 'Transactions')
@@ -175,6 +176,7 @@ def transaction():
 # Transfer page
 # You need to be logged in to use it
 @app.route('/transfer', methods=['GET', 'POST'])
+@login_required
 def transfer():
     if current_user.is_authenticated:
         form = transferForm()
@@ -235,6 +237,7 @@ def transfer():
 # Deposit page
 # You need to be logged in to use it
 @app.route('/deposit', methods=['GET', 'POST'])
+@login_required
 def deposit():
     form = depositForm()
     if current_user.is_authenticated:
@@ -286,6 +289,6 @@ def deposit():
 def logout():
     if current_user.is_authenticated:
         logout_user()
-        return redirect(url_for("index"))
+        return redirect(url_for("login"))
     flash("Please login", "warning")
     return redirect(url_for("login"))
