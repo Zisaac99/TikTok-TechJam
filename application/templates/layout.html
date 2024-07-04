@@ -16,19 +16,21 @@
 </head>
 <body>
     <div class='container-fluid'>
-        <!-- Nav bar -->
-        <div class='row navbar'>
-            {% include "includes/nav.html" %}
-        </div>
+        <div class="flex-wrapper ">
+            <!-- Nav bar -->
+            <div class='row navbar'>
+                {% include "includes/nav.html" %}
+            </div>
 
-        {% for category, message in get_flashed_messages(with_categories=True) %}
-        <div class="alert alert-{{category}} text-center">{{ message }}</div>
-        {% endfor %}
-        
-        {% block content %}
-        {% endblock %}
-        <!-- Footer -->
-        <footer class='row footer'>{% include "includes/footer.html" %}</footer>
+            {% for category, message in get_flashed_messages(with_categories=True) %}
+            <div class="alert alert-{{category}} text-center">{{ message }}</div>
+            {% endfor %}
+            
+            {% block content %}
+            {% endblock %}
+            <!-- Footer -->
+            <footer class='row footer'>{% include "includes/footer.html" %}</footer>
+        </div>
     </div>
 </body>
 </html>

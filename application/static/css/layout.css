@@ -10,6 +10,14 @@
     line-height: 1.5;
 }
 
+.flex-wrapper {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  
+
 .container-footer {
     background-color: #4C586F;
     margin: auto;
