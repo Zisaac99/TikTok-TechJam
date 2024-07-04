@@ -10,9 +10,8 @@
     align-items: center;
 }
 
-.login-form::after {
+/* .login-form::after {
     content: "";
-    /* background: url('../images/multiuser.jpg'); */
     opacity: 0.5;
     top: 0;
     left: 0;
@@ -23,7 +22,7 @@
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
-}
+} */
 
 .container {
     max-width: 1500px;
