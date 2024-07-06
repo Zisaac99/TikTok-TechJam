@@ -75,6 +75,25 @@ python =m flask run
 
 Visit [http://127.0.0.1:5000](http://127.0.0.1:5000) in your browser.
 
+### API to run
+#### Create ATM
+
+`POST /api/add_atm?atm=<ATM Number>&withdraw=<Withdrawal Amount>`
+
+    curl --location --request POST 'http://127.0.0.1:5000/api/add_atm?atm=1234&withdraw=200'
+
+#### Response
+
+    HTTP/1.1 201 Created
+    Date: Thu, 6 Jul 2024 21:43:30 GMT
+    Status: 201 Created
+    Connection: close
+    Content-Type: application/json
+    Location: /api/add_atm?atm=1234&withdraw=200
+    Content-Length: 85
+
+    {"Success": "ATM: 123456 with max withdrawl amount of $200 was successfully created"}
+
 ### Our Contributors
 <a href="https://github.com/Zisaac99/TikTok-TechJam/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=Zisaac99/TikTok-TechJam" />
