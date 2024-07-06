@@ -1,4 +1,16 @@
-# Project for the TikTok TechJam Competition (Reshaping Payments - Wallets)
+# Project for TikTok TechJam (Reshaping Payments - Wallets)
+
+> ## Table of Contents
+
+* [Overview](#Overview)
+* [Features](#Features)
+* [Tech Stack](#Tech-stack)
+* [Getting Started](#Getting-Started)
+  * [Prerequisites](#Prerequisites)
+* [Our Contributors](#Our-Contributors)
+
+---
+
 ## Overivew
 This project aims to showcase our team's idea to help the unbanked to go digital and to integrate this in their daily lives. We took inspiration from banking apps such as DBS/Standard Chartered to come up with our solution in the form of a webpage. 
 
