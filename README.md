@@ -23,7 +23,7 @@ Here's what you need to run this project:
 - Python 3.10
 
 1. Clone the repository
-git clone https://github.com/Zisaac99/TikTok-TechJam.git
+git clone [https://github.com/Zisaac99/TikTok-TechJam.git]
 cd TikTok-TechJam
 
 2. Create a virtual env
