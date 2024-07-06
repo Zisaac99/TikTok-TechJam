@@ -65,7 +65,7 @@ body {
 }
 
 /* Credit Card */
-.container-card {
+.card-container {
   font-family: "Poppins", sans-serif;
   position: relative;
   background-color: paleturquoise;
@@ -76,6 +76,14 @@ body {
   width: 100%;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
 }
+
+.card-container .card-details {
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
 header,
 .logo {
   display: flex;
@@ -106,10 +114,4 @@ h5.number {
 }
 h5.name {
   margin-top: 20px;
-}
-.container-card .card-details {
-  margin-top: 40px;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
 }

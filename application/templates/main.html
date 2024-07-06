@@ -38,7 +38,7 @@
       </div>
     </div>
 
-    <div class="container-card">
+    <div class="card-container">
       <header>
         <span class="logo">
           <h5>DIT12</h5>
@@ -46,12 +46,12 @@
         <img src="{{ url_for('static',filename='images/chip.png')}}" alt="" class="chip" />
       </header>
       <div class="card-details">
-        <div class="name-number">
+        <div class="card-name-num">
           <h6>Card Number</h6>
           <h5 class="number">8050 5040 2030 3020</h5>
           <h5 class="name">{{ current_user.fullname }}</h5>
         </div>
-        <div class="valid-date">
+        <div class="valid-thru">
           <h6>Valid Thru</h6>
           <h5>05/28</h5>
         </div>
