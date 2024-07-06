@@ -60,4 +60,10 @@ python =m flask run
 ```
 
 7. Open the app in your browser
+
 Visit [http://127.0.0.1:5000](http://127.0.0.1:5000) in your browser.
+
+### Our Contributors
+<a href="https://github.com/Zisaac99/TikTok-TechJam/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Zisaac99/TikTok-TechJam" />
+</a>
