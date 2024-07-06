@@ -7,6 +7,7 @@
 * [Tech Stack](#Tech-stack)
 * [Getting Started](#Getting-Started)
   * [Prerequisites](#Prerequisites)
+  * [API to run](#API-to-run)
 * [Our Contributors](#Our-Contributors)
 
 ---
