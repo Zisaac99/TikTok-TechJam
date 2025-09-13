@@ -51,7 +51,7 @@ python -m venv env
 3. Activate the virtual env
 
 ```shell  
-env\scripts\activate.hat
+env\scripts\activate.bat
 ```
 
 4. Install Dependecies
