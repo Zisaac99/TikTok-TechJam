@@ -69,7 +69,7 @@ set FLASK_APP=app.py
 6. Run the Application
 
 ```shell  
-python =m flask run
+python -m flask run
 ```
 
 7. Open the app in your browser
